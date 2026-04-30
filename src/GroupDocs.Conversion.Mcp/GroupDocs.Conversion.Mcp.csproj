@@ -1,0 +1,54 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <PackageId>GroupDocs.Conversion.Mcp</PackageId>
+    <Version>$(GroupDocsConversionMcp)</Version>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <Description>MCP server exposing GroupDocs.Conversion for .NET — convert documents between PDF, Word, Excel, PowerPoint, HTML, and 70+ formats, list supported conversions, and inspect document info via AI agents.</Description>
+    <PackageTags>groupdocs;conversion;mcp;model-context-protocol;mcp-server;dotnet-tool;ai;document-conversion</PackageTags>
+    <PackageIcon>images\icon.png</PackageIcon>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <IsPackable>true</IsPackable>
+    <!-- Package as a .NET tool so the nupkg gets the required tools/ layout
+         for `dnx` / `dotnet tool install` invocation. -->
+    <PackAsTool>true</PackAsTool>
+    <!-- Mark as MCP server for NuGet.org discovery (packagetype=McpServer filter).
+         NOTE: correct MSBuild property is singular <PackageType>; the plural form is ignored. -->
+    <PackageType>McpServer</PackageType>
+    <!-- CLI tool name for dnx / dotnet tool install invocation -->
+    <ToolCommandName>groupdocs-conversion-mcp</ToolCommandName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\..\assets\icon.png" Pack="true" Visible="false" PackagePath="images\icon.png" />
+    <None Include="..\..\README.md" Pack="true" PackagePath="/" />
+    <!-- server.json — read by NuGet.org to generate mcp.json snippets on the package page -->
+    <None Include=".mcp\server.json" Pack="true" PackagePath=".mcp/server.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- Core infrastructure — NuGet packages from groupdocs-mcp-core -->
+    <PackageReference Include="GroupDocs.Mcp.Core" Version="$(GroupDocsMcpCore)" />
+    <PackageReference Include="GroupDocs.Mcp.Local.Storage" Version="$(GroupDocsMcpCore)" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="GroupDocs.Conversion" Version="$(GroupDocsConversion)" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="$(MicrosoftExtensionsHosting)" />
+    <PackageReference Include="ModelContextProtocol" Version="$(ModelContextProtocol)" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- GroupDocs.Conversion's published nuspec only declares SkiaSharp (managed). On Linux, libSkiaSharp.so is missing without this — SKObject..cctor crashes. Drop once upstream nuspec includes the platform native asset packages. -->
+    <PackageReference Include="SkiaSharp.NativeAssets.Linux.NoDependencies" Version="$(SkiaSharp)" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- GroupDocs.Conversion's image-format paths (JPEG, PNG, image-bearing PDFs, presentation-to-image) call System.Drawing.Common internally. On non-Windows that throws PlatformNotSupportedException unless this flag is set. Pair with libgdiplus + libfontconfig1 in docker/Dockerfile. Drop once upstream migrates off System.Drawing — flag was removed in System.Drawing.Common 7.0+. -->
+    <RuntimeHostConfigurationOption Include="System.Drawing.EnableUnixSupport" Value="true" />
+  </ItemGroup>
+
+</Project>

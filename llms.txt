@@ -1,0 +1,39 @@
+# GroupDocs.Conversion MCP Server
+
+MCP server that exposes GroupDocs.Conversion for .NET — convert documents between PDF, Word, Excel, PowerPoint, HTML, images, and 70+ formats, list supported conversions, and inspect document info via AI agents (Claude, Cursor, VS Code / GitHub Copilot, and other MCP-compatible clients).
+
+## Install
+
+- With dnx (.NET 10 SDK, no install step): `dnx GroupDocs.Conversion.Mcp@26.5.0 --yes`
+- As a global dotnet tool: `dotnet tool install -g GroupDocs.Conversion.Mcp` then run `groupdocs-conversion-mcp`
+- As a Docker container: `docker run --rm -i -v $(pwd)/documents:/data ghcr.io/groupdocs-conversion/conversion-net-mcp:latest`
+
+## MCP tools
+
+- Convert — convert a document to a different format (PDF, DOCX, XLSX, PPTX, HTML, PNG, JPG, and 70+ more) and save to storage
+- GetSupportedFormats — list every target format the source document can be converted to, with primary/secondary indicators
+- GetDocumentInfo — return file type, page count, and basic properties (author, title, dates, password-protected) for a source document
+
+## Supported formats
+
+PDF, DOCX, XLSX, PPTX, HTML, PNG, JPG, TIFF, GIF, BMP, SVG, PSD, TXT, RTF, CSV, EPUB, MOBI, EML, MSG, MP3, MP4, AVI, and 50+ more document, image, ebook, email, and media formats.
+
+## Environment variables
+
+- GROUPDOCS_MCP_STORAGE_PATH — base folder for input + output (defaults to current working directory)
+- GROUPDOCS_MCP_OUTPUT_PATH — optional, routes output files to a separate folder
+- GROUPDOCS_LICENSE_PATH — path to GroupDocs.Total.lic, omit for evaluation mode
+
+## Key links
+
+- NuGet: https://www.nuget.org/packages/GroupDocs.Conversion.Mcp
+- Repository: https://github.com/groupdocs-conversion/GroupDocs.Conversion.Mcp
+- Docker: ghcr.io/groupdocs-conversion/conversion-net-mcp and docker.io/groupdocs/conversion-net-mcp
+- License: MIT
+
+## Example prompts for AI agents
+
+- "Convert report.docx to PDF"
+- "What formats can I convert sample.pptx to?"
+- "How many pages does contract.pdf have?"
+- "Convert all .docx files in the /uploads folder to PDF"
