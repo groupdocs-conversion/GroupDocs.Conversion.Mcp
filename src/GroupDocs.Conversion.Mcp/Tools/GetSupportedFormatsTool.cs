@@ -46,8 +46,7 @@ public static class GetSupportedFormatsTool
                     .ToList()
             };
 
-            var json = JsonSerializer.Serialize(result, JsonOptions);
-            return output.TruncateText(json);
+            return JsonSerializer.Serialize(result, JsonOptions);
         }
         finally
         {

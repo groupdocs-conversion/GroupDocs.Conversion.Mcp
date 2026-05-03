@@ -52,8 +52,7 @@ public static class GetDocumentInfoTool
                 info = JsonSerializer.Deserialize<JsonElement>(serialized)
             };
 
-            var json = JsonSerializer.Serialize(result, JsonOptions);
-            return output.TruncateText(json);
+            return JsonSerializer.Serialize(result, JsonOptions);
         }
         finally
         {
