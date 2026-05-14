@@ -66,10 +66,31 @@ public static class ConvertTool
             var description = $"{prefix}Converted '{resolved.FileName}' to {targetExt.ToUpperInvariant()}";
             return await output.BuildFileOutputAsync(savedPath, description);
         }
+        catch (Exception ex)
+        {
+            // Surface the underlying engine exception (type + message + inner
+            // chain) instead of letting it bubble up to ModelContextProtocol's
+            // generic "An error occurred invoking 'convert'." wrapper, which
+            // discards the exception detail. Critical for diagnosing native-deps
+            // issues on Linux (e.g. missing fonts/libgdiplus) — without this,
+            // every Linux conversion error looks identical from the client.
+            return FormatException(ex, resolved.FileName, targetExt);
+        }
         finally
         {
             if (File.Exists(tempInput)) File.Delete(tempInput);
             if (File.Exists(tempOutput)) File.Delete(tempOutput);
         }
+    }
+
+    private static string FormatException(Exception ex, string fileName, string targetExt)
+    {
+        var sb = new System.Text.StringBuilder();
+        sb.Append($"Conversion failed for '{fileName}' -> {targetExt}: ");
+        sb.Append($"{ex.GetType().FullName}: {ex.Message}");
+        var inner = ex.InnerException;
+        for (int depth = 0; inner != null && depth < 5; depth++, inner = inner.InnerException)
+            sb.Append($" | inner({depth}): {inner.GetType().FullName}: {inner.Message}");
+        return sb.ToString();
     }
 }
