@@ -54,6 +54,13 @@ public static class GetDocumentInfoTool
 
             return JsonSerializer.Serialize(result, JsonOptions);
         }
+        catch (Exception ex)
+        {
+            // Surface the underlying engine exception instead of MCP's generic
+            // "An error occurred invoking 'get_document_info'." wrapper, which
+            // discards the detail needed to diagnose native-deps failures.
+            return ToolError.Format("Document-info lookup", resolved.FileName, ex);
+        }
         finally
         {
             if (File.Exists(tempInput)) File.Delete(tempInput);

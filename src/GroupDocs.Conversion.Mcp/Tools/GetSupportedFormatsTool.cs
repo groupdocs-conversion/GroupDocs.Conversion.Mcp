@@ -48,6 +48,13 @@ public static class GetSupportedFormatsTool
 
             return JsonSerializer.Serialize(result, JsonOptions);
         }
+        catch (Exception ex)
+        {
+            // Surface the underlying engine exception instead of MCP's generic
+            // "An error occurred invoking 'get_supported_formats'." wrapper, which
+            // discards the detail needed to diagnose native-deps failures.
+            return ToolError.Format("Supported-formats lookup", resolved.FileName, ex);
+        }
         finally
         {
             if (File.Exists(tempInput)) File.Delete(tempInput);
