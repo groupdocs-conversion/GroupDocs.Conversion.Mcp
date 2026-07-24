@@ -9,6 +9,14 @@
     }
   ],
   "servers": {
+    "groupdocs-conversion": {
+      "type": "stdio",
+      "command": "dnx",
+      "args": ["GroupDocs.Conversion.Mcp", "--yes"],
+      "env": {
+        "GROUPDOCS_MCP_STORAGE_PATH": "${input:storage_path}"
+      }
+    },
     "groupdocs-conversion-dev": {
       "type": "stdio",
       "command": "dotnet",

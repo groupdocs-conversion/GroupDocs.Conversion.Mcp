@@ -1,0 +1,29 @@
+{
+  "$comment": "Canonical MCP install config - the SINGLE source all generated install snippets, deeplinks, and README install blocks derive from. Edit this file, then run install/generate-install-links.ps1 to regenerate install/generated/ and the README install-buttons block. CI fails if they drift. The package VERSION is intentionally absent here - it is read from build/dependencies.props (<GroupDocsConversionMcp>) at generation time so there is exactly one version source of truth.",
+  "name": "groupdocs-conversion",
+  "displayName": "GroupDocs Conversion",
+  "packageId": "GroupDocs.Conversion.Mcp",
+  "toolCommand": "groupdocs-conversion-mcp",
+  "registryName": "io.github.groupdocs-conversion/groupdocs-conversion-mcp",
+  "ghcrImage": "ghcr.io/groupdocs-conversion/conversion-net-mcp",
+  "dockerHubImage": "groupdocs/conversion-net-mcp",
+  "testsRepo": "groupdocs-conversion/GroupDocs.Conversion.Mcp.Tests",
+  "command": "dnx",
+  "args": ["GroupDocs.Conversion.Mcp", "--yes"],
+  "env": {
+    "GROUPDOCS_MCP_STORAGE_PATH": "${input:storage_path}",
+    "GROUPDOCS_LICENSE_PATH": "${input:license_path}"
+  },
+  "inputs": [
+    {
+      "id": "storage_path",
+      "description": "Base folder for input and output files",
+      "required": true
+    },
+    {
+      "id": "license_path",
+      "description": "Path to GroupDocs license file (optional - evaluation mode if empty)",
+      "required": false
+    }
+  ]
+}

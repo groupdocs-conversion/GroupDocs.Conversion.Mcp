@@ -4,7 +4,7 @@ MCP server that exposes GroupDocs.Conversion for .NET — convert documents betw
 
 ## Install
 
-- With dnx (.NET 10 SDK, no install step): `dnx GroupDocs.Conversion.Mcp@26.7.0 --yes`
+- With dnx (.NET 10 SDK, no install step): `dnx GroupDocs.Conversion.Mcp@26.7.1 --yes`
 - As a global dotnet tool: `dotnet tool install -g GroupDocs.Conversion.Mcp` then run `groupdocs-conversion-mcp`
 - As a Docker container: `docker run --rm -i -v $(pwd)/documents:/data ghcr.io/groupdocs-conversion/conversion-net-mcp:latest`
 - Native prerequisite for native (dnx / global tool) runs on Linux and macOS: install libgdiplus — `sudo apt-get install -y libgdiplus libfontconfig1 ttf-mscorefonts-installer` on Linux, `brew install mono-libgdiplus` on macOS. Not needed on Windows (GDI+ built in) or in Docker (bundled in the image).
@@ -25,12 +25,17 @@ PDF, DOCX, XLSX, PPTX, HTML, PNG, JPG, TIFF, GIF, BMP, SVG, PSD, TXT, RTF, CSV, 
 - GROUPDOCS_MCP_OUTPUT_PATH — optional, routes output files to a separate folder
 - GROUPDOCS_LICENSE_PATH — path to GroupDocs.Total.lic, omit for evaluation mode
 
+## Licensing
+
+The MCP server is MIT; the underlying GroupDocs.Conversion engine requires a license for production use. Evaluation mode (no license): converted output carries an evaluation watermark, tool responses include an evaluation-mode notice, and a single server process can open at most 15 documents before restart. Free 30-day temporary license: https://purchase.groupdocs.com/temporary-license/ — purchase: https://purchase.groupdocs.com/pricing/conversion/net
+
 ## Key links
 
 - NuGet: https://www.nuget.org/packages/GroupDocs.Conversion.Mcp
 - Repository: https://github.com/groupdocs-conversion/GroupDocs.Conversion.Mcp
 - Docker: ghcr.io/groupdocs-conversion/conversion-net-mcp and docker.io/groupdocs/conversion-net-mcp
 - License: MIT
+- How-to guides (install from NuGet, run via Docker, Claude Desktop, VS Code / Copilot, MCP registry, integration tests): https://github.com/groupdocs-conversion/GroupDocs.Conversion.Mcp.Tests/tree/master/how-to
 
 ## Example prompts for AI agents
 
